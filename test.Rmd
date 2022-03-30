@@ -12,3 +12,35 @@ library(tidyr)
 library(tidyverse)
 library(dplyr)
 ```
+
+```{r}
+data("Batting")
+```
+
+## Data Preparation (Lesson 1 & 2)
+
+## Exploratory Analysis (Lesson 1 & 2)
+Lessons 1 and 2 will just be parts of the overall project. Simple things like data manipulation, apply functions, boxplots, etc. This will be data preparation items and exploratory analysis.
+
+
+## 0-dimensional Reduction (Lesson 4)
+
+#### Bootstrapping
+
+## PCA (Lesson 4)
+
+#### Screeplot
+
+#### Biplot
+
+## Cluster Analysis (Lesson 5)
+
+#### Silhouette
+
+#### Diana
+
+## Linear Regression (Lesson 6)
+
+## Simple Linear Regression
+
+## Multiple Linear Regression

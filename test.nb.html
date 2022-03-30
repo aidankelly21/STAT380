@@ -239,92 +239,65 @@ summary {
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShMYWhtYW4pXG5gYGAifQ== -->
-<pre class="r"><code>library(Lahman)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLFMYWhtYW7jpLzjuLIgd2FzIGJ1aWx0IHVuZGVyIFIgdmVyc2lvbiA0LjAuNVxuIn0= -->
-<pre><code>package 㤼㸱Lahman㤼㸲 was built under R version 4.0.5</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShtb3NhaWMpXG5gYGAifQ== -->
-<pre class="r"><code>library(mosaic)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ2h0bWx3aWRnZXRzJzpcbiAgbWV0aG9kICAgICAgICAgICBmcm9tICAgICAgICAgXG4gIHByaW50Lmh0bWx3aWRnZXQgdG9vbHM6cnN0dWRpb1xuUmVnaXN0ZXJlZCBTMyBtZXRob2Qgb3ZlcndyaXR0ZW4gYnkgJ21vc2FpYyc6XG4gIG1ldGhvZCAgICAgICAgICAgICAgICAgICAgICAgICAgIGZyb20gICBcbiAgZm9ydGlmeS5TcGF0aWFsUG9seWdvbnNEYXRhRnJhbWUgZ2dwbG90MlxuXG5UaGUgJ21vc2FpYycgcGFja2FnZSBtYXNrcyBzZXZlcmFsIGZ1bmN0aW9ucyBmcm9tIGNvcmUgcGFja2FnZXMgaW4gb3JkZXIgdG8gYWRkIFxuYWRkaXRpb25hbCBmZWF0dXJlcy4gIFRoZSBvcmlnaW5hbCBiZWhhdmlvciBvZiB0aGVzZSBmdW5jdGlvbnMgc2hvdWxkIG5vdCBiZSBhZmZlY3RlZCBieSB0aGlzLlxuXG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixbW9zYWlj46S847iyXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpkcGx5cuOkvOO4sjpcblxuICAgIGNvdW50LCBkbywgdGFsbHlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g46S847ixcGFja2FnZTpNYXRyaXjjpLzjuLI6XG5cbiAgICBtZWFuXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0IGlzIG1hc2tlZCBmcm9tIOOkvOO4sXBhY2thZ2U6Z2dwbG90MuOkvOO4sjpcblxuICAgIHN0YXRcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOnN0YXRz46S847iyOlxuXG4gICAgYmlub20udGVzdCwgY29yLCBjb3IudGVzdCwgY292LCBmaXZlbnVtLFxuICAgIElRUiwgbWVkaWFuLCBwcm9wLnRlc3QsIHF1YW50aWxlLCBzZCxcbiAgICB0LnRlc3QsIHZhclxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOOkvOO4sXBhY2thZ2U6YmFzZeOkvOO4sjpcblxuICAgIG1heCwgbWVhbiwgbWluLCBwcm9kLCByYW5nZSwgc2FtcGxlLCBzdW1cbiJ9 -->
-<pre><code>Registered S3 method overwritten by &#39;htmlwidgets&#39;:
-  method           from         
-  print.htmlwidget tools:rstudio
-Registered S3 method overwritten by &#39;mosaic&#39;:
-  method                           from   
-  fortify.SpatialPolygonsDataFrame ggplot2
-
-The &#39;mosaic&#39; package masks several functions from core packages in order to add 
-additional features.  The original behavior of these functions should not be affected by this.
-
-Attaching package: 㤼㸱mosaic㤼㸲
-
-The following objects are masked from 㤼㸱package:dplyr㤼㸲:
-
-    count, do, tally
-
-The following object is masked from 㤼㸱package:Matrix㤼㸲:
-
-    mean
-
-The following object is masked from 㤼㸱package:ggplot2㤼㸲:
-
-    stat
-
-The following objects are masked from 㤼㸱package:stats㤼㸲:
-
-    binom.test, cor, cor.test, cov, fivenum,
-    IQR, median, prop.test, quantile, sd,
-    t.test, var
-
-The following objects are masked from 㤼㸱package:base㤼㸲:
-
-    max, mean, min, prod, range, sample, sum</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5cilcbmBgYCJ9 -->
-<pre class="r"><code>library(tidyr)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoicGFja2FnZSDjpLzjuLF0aWR5cuOkvOO4siB3YXMgYnVpbHQgdW5kZXIgUiB2ZXJzaW9uIDQuMC41XG5BdHRhY2hpbmcgcGFja2FnZTog46S847ixdGlkeXLjpLzjuLJcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDjpLzjuLFwYWNrYWdlOk1hdHJpeOOkvOO4sjpcblxuICAgIGV4cGFuZCwgcGFjaywgdW5wYWNrXG4ifQ== -->
-<pre><code>package 㤼㸱tidyr㤼㸲 was built under R version 4.0.5
-Attaching package: 㤼㸱tidyr㤼㸲
-
-The following objects are masked from 㤼㸱package:Matrix㤼㸲:
-
-    expand, pack, unpack</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeSh0aWR5dmVyc2UpXG5gYGAifQ== -->
-<pre class="r"><code>library(tidyverse)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUmVnaXN0ZXJlZCBTMyBtZXRob2RzIG92ZXJ3cml0dGVuIGJ5ICdkYnBseXInOlxuICBtZXRob2QgICAgICAgICBmcm9tXG4gIHByaW50LnRibF9sYXp5ICAgICBcbiAgcHJpbnQudGJsX3NxbCAgICAgIFxuLS0gQXR0YWNoaW5nIHBhY2thZ2VzIC0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0gdGlkeXZlcnNlIDEuMy4wIC0tXG52IHRpYmJsZSAgMy4xLjAgICAgIHYgc3RyaW5nciAxLjQuMFxudiByZWFkciAgIDEuNC4wICAgICB2IGZvcmNhdHMgMC41LjBcbnYgcHVycnIgICAwLjMuNCAgICAgXG5wYWNrYWdlIJF0aWJibGWSIHdhcyBidWlsdCB1bmRlciBSIHZlcnNpb24gNC4wLjUtLSBDb25mbGljdHMgLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLSB0aWR5dmVyc2VfY29uZmxpY3RzKCkgLS1cbnggbW9zYWljOjpjb3VudCgpICAgICAgICAgICAgbWFza3MgZHBseXI6OmNvdW50KClcbnggcHVycnI6OmNyb3NzKCkgICAgICAgICAgICAgbWFza3MgbW9zYWljOjpjcm9zcygpXG54IG1vc2FpYzo6ZG8oKSAgICAgICAgICAgICAgIG1hc2tzIGRwbHlyOjpkbygpXG54IHRpZHlyOjpleHBhbmQoKSAgICAgICAgICAgIG1hc2tzIE1hdHJpeDo6ZXhwYW5kKClcbnggZHBseXI6OmZpbHRlcigpICAgICAgICAgICAgbWFza3Mgc3RhdHM6OmZpbHRlcigpXG54IGdnc3RhbmNlOjpnZW9tX2Vycm9yYmFyaCgpIG1hc2tzIGdncGxvdDI6Omdlb21fZXJyb3JiYXJoKClcbnggZHBseXI6OmxhZygpICAgICAgICAgICAgICAgbWFza3Mgc3RhdHM6OmxhZygpXG54IHRpZHlyOjpwYWNrKCkgICAgICAgICAgICAgIG1hc2tzIE1hdHJpeDo6cGFjaygpXG54IG1vc2FpYzo6c3RhdCgpICAgICAgICAgICAgIG1hc2tzIGdncGxvdDI6OnN0YXQoKVxueCBtb3NhaWM6OnRhbGx5KCkgICAgICAgICAgICBtYXNrcyBkcGx5cjo6dGFsbHkoKVxueCB0aWR5cjo6dW5wYWNrKCkgICAgICAgICAgICBtYXNrcyBNYXRyaXg6OnVucGFjaygpXG4ifQ== -->
-<pre><code>Registered S3 methods overwritten by &#39;dbplyr&#39;:
-  method         from
-  print.tbl_lazy     
-  print.tbl_sql      
--- Attaching packages ---------------------------------------------------------------------------------- tidyverse 1.3.0 --
-v tibble  3.1.0     v stringr 1.4.0
-v readr   1.4.0     v forcats 0.5.0
-v purrr   0.3.4     
-package 㤼㸱tibble㤼㸲 was built under R version 4.0.5-- Conflicts ------------------------------------------------------------------------------------- tidyverse_conflicts() --
-x mosaic::count()            masks dplyr::count()
-x purrr::cross()             masks mosaic::cross()
-x mosaic::do()               masks dplyr::do()
-x tidyr::expand()            masks Matrix::expand()
-x dplyr::filter()            masks stats::filter()
-x ggstance::geom_errorbarh() masks ggplot2::geom_errorbarh()
-x dplyr::lag()               masks stats::lag()
-x tidyr::pack()              masks Matrix::pack()
-x mosaic::stat()             masks ggplot2::stat()
-x mosaic::tally()            masks dplyr::tally()
-x tidyr::unpack()            masks Matrix::unpack()</code></pre>
-<!-- rnb-output-end -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShkcGx5cilcbmBgYCJ9 -->
-<pre class="r"><code>library(dplyr)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxubGlicmFyeShMYWhtYW4pXG5saWJyYXJ5KG1vc2FpYylcbmxpYnJhcnkodGlkeXIpXG5saWJyYXJ5KHRpZHl2ZXJzZSlcbmxpYnJhcnkoZHBseXIpXG5gYGAifQ== -->
+<pre class="r"><code>library(Lahman)
+library(mosaic)
+library(tidyr)
+library(tidyverse)
+library(dplyr)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YShcIkJhdHRpbmdcIilcbmBgYCJ9 -->
+<pre class="r"><code>data(&quot;Batting&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="data-preparation-lesson-1-2" class="section level2">
+<h2>Data Preparation (Lesson 1 &amp; 2)</h2>
+</div>
+<div id="exploratory-analysis-lesson-1-2" class="section level2">
+<h2>Exploratory Analysis (Lesson 1 &amp; 2)</h2>
+<p>Lessons 1 and 2 will just be parts of the overall project. Simple things like data manipulation, apply functions, boxplots, etc. This will be data preparation items and exploratory analysis.</p>
+</div>
+<div id="dimensional-reduction-lesson-4" class="section level2">
+<h2>0-dimensional Reduction (Lesson 4)</h2>
+<div id="bootstrapping" class="section level4">
+<h4>Bootstrapping</h4>
+</div>
+</div>
+<div id="pca-lesson-4" class="section level2">
+<h2>PCA (Lesson 4)</h2>
+<div id="screeplot" class="section level4">
+<h4>Screeplot</h4>
+</div>
+<div id="biplot" class="section level4">
+<h4>Biplot</h4>
+</div>
+</div>
+<div id="cluster-analysis-lesson-5" class="section level2">
+<h2>Cluster Analysis (Lesson 5)</h2>
+<div id="silhouette" class="section level4">
+<h4>Silhouette</h4>
+</div>
+<div id="diana" class="section level4">
+<h4>Diana</h4>
+</div>
+</div>
+<div id="linear-regression-lesson-6" class="section level2">
+<h2>Linear Regression (Lesson 6)</h2>
+</div>
+<div id="simple-linear-regression" class="section level2">
+<h2>Simple Linear Regression</h2>
+</div>
+<div id="multiple-linear-regression" class="section level2">
+<h2>Multiple Linear Regression</h2>
+<!-- rnb-text-end -->
+</div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCmBgYHtyfQ0KbGlicmFyeShMYWhtYW4pDQpsaWJyYXJ5KG1vc2FpYykNCmxpYnJhcnkodGlkeXIpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpgYGA=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCmBgYHtyfQ0KbGlicmFyeShMYWhtYW4pDQpsaWJyYXJ5KG1vc2FpYykNCmxpYnJhcnkodGlkeXIpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpgYGANCg0KYGBge3J9DQpkYXRhKCJCYXR0aW5nIikNCmBgYA0KDQojIyBEYXRhIFByZXBhcmF0aW9uIChMZXNzb24gMSAmIDIpDQoNCiMjIEV4cGxvcmF0b3J5IEFuYWx5c2lzIChMZXNzb24gMSAmIDIpDQpMZXNzb25zIDEgYW5kIDIgd2lsbCBqdXN0IGJlIHBhcnRzIG9mIHRoZSBvdmVyYWxsIHByb2plY3QuIFNpbXBsZSB0aGluZ3MgbGlrZSBkYXRhIG1hbmlwdWxhdGlvbiwgYXBwbHkgZnVuY3Rpb25zLCBib3hwbG90cywgZXRjLiBUaGlzIHdpbGwgYmUgZGF0YSBwcmVwYXJhdGlvbiBpdGVtcyBhbmQgZXhwbG9yYXRvcnkgYW5hbHlzaXMuDQoNCg0KIyMgMC1kaW1lbnNpb25hbCBSZWR1Y3Rpb24gKExlc3NvbiA0KQ0KDQojIyMjIEJvb3RzdHJhcHBpbmcNCg0KIyMgUENBIChMZXNzb24gNCkNCg0KIyMjIyBTY3JlZXBsb3QNCg0KIyMjIyBCaXBsb3QNCg0KIyMgQ2x1c3RlciBBbmFseXNpcyAoTGVzc29uIDUpDQoNCiMjIyMgU2lsaG91ZXR0ZQ0KDQojIyMjIERpYW5hDQoNCiMjIExpbmVhciBSZWdyZXNzaW9uIChMZXNzb24gNikNCg0KIyMgU2ltcGxlIExpbmVhciBSZWdyZXNzaW9uDQoNCiMjIE11bHRpcGxlIExpbmVhciBSZWdyZXNzaW9uDQo=</div>
 
 
 
