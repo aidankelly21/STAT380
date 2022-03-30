@@ -14,7 +14,7 @@ library(dplyr)
 ```
 
 ```{r}
-#Load in People and Batting Dataframes
+#Load in People, Batting, and Pitching Dataframes
 data("People") 
 data("Batting")
 data("Pitching")
@@ -40,9 +40,26 @@ pitching <- merge(Pitching,
 
 ## Data Preparation (Lesson 1 & 2)
 
+```{r}
+#Keep players with over 100 AB
+#Creating batting average variable.
+
+batting <- batting %>%
+  filter(AB >= 100) %>%
+  mutate(BAVG = (H/AB))
+  
+```
+
+
 ## Exploratory Analysis (Lesson 1 & 2)
 Lessons 1 and 2 will just be parts of the overall project. Simple things like data manipulation, apply functions, boxplots, etc. This will be data preparation items and exploratory analysis.
 
+```{r}
+b <- ggplot(batting, aes(x = teamID, y = HR)) +
+  geom_boxplot(col = "black", aes(fill = teamID))
+b
+
+```
 
 ## 0-dimensional Reduction (Lesson 4)
 
