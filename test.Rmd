@@ -14,7 +14,28 @@ library(dplyr)
 ```
 
 ```{r}
+#Load in People and Batting Dataframes
+data("People") 
 data("Batting")
+data("Pitching")
+```
+
+```{r}
+#Merges player name to Batting data. 
+
+People$name <- paste(People$nameFirst, People$nameLast, sep = " ")
+
+batting <- merge(Batting,
+                 People[,c("playerID", "name")],
+                 by = "playerID", all.x = TRUE)
+
+#Merges player name to Pitching data.
+
+People$name <- paste(People$nameFirst, People$nameLast, sep = " ")
+
+pitching <- merge(Pitching,
+                 People[,c("playerID", "name")],
+                 by = "playerID", all.x = TRUE)
 ```
 
 ## Data Preparation (Lesson 1 & 2)

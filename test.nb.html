@@ -250,8 +250,32 @@ library(dplyr)</code></pre>
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YShcIkJhdHRpbmdcIilcbmBgYCJ9 -->
-<pre class="r"><code>data(&quot;Batting&quot;)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0xvYWQgaW4gUGVvcGxlIGFuZCBCYXR0aW5nIERhdGFmcmFtZXNcbmRhdGEoXCJQZW9wbGVcIikgXG5kYXRhKFwiQmF0dGluZ1wiKVxuZGF0YShcIlBpdGNoaW5nXCIpXG5gYGAifQ== -->
+<pre class="r"><code>#Load in People and Batting Dataframes
+data(&quot;People&quot;) 
+data(&quot;Batting&quot;)
+data(&quot;Pitching&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI01lcmdlcyBwbGF5ZXIgbmFtZSB0byBCYXR0aW5nIGRhdGEuIFxuXG5QZW9wbGUkbmFtZSA8LSBwYXN0ZShQZW9wbGUkbmFtZUZpcnN0LCBQZW9wbGUkbmFtZUxhc3QsIHNlcCA9IFwiIFwiKVxuXG5iYXR0aW5nIDwtIG1lcmdlKEJhdHRpbmcsXG4gICAgICAgICAgICAgICAgIFBlb3BsZVssYyhcInBsYXllcklEXCIsIFwibmFtZVwiKV0sXG4gICAgICAgICAgICAgICAgIGJ5ID0gXCJwbGF5ZXJJRFwiLCBhbGwueCA9IFRSVUUpXG5cbiNNZXJnZXN0IHBsYXllciBuYW1lIHRvIFBpdGNoaW5nIGRhdGEuXG5cblBlb3BsZSRuYW1lIDwtIHBhc3RlKFBlb3BsZSRuYW1lRmlyc3QsIFBlb3BsZSRuYW1lTGFzdCwgc2VwID0gXCIgXCIpXG5cbnBpdGNoaW5nIDwtIG1lcmdlKFBpdGNoaW5nLFxuICAgICAgICAgICAgICAgICBQZW9wbGVbLGMoXCJwbGF5ZXJJRFwiLCBcIm5hbWVcIildLFxuICAgICAgICAgICAgICAgICBieSA9IFwicGxheWVySURcIiwgYWxsLnggPSBUUlVFKVxuYGBgIn0= -->
+<pre class="r"><code>#Merges player name to Batting data. 
+
+People$name &lt;- paste(People$nameFirst, People$nameLast, sep = &quot; &quot;)
+
+batting &lt;- merge(Batting,
+                 People[,c(&quot;playerID&quot;, &quot;name&quot;)],
+                 by = &quot;playerID&quot;, all.x = TRUE)
+
+#Mergest player name to Pitching data.
+
+People$name &lt;- paste(People$nameFirst, People$nameLast, sep = &quot; &quot;)
+
+pitching &lt;- merge(Pitching,
+                 People[,c(&quot;playerID&quot;, &quot;name&quot;)],
+                 by = &quot;playerID&quot;, all.x = TRUE)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -297,7 +321,7 @@ library(dplyr)</code></pre>
 <!-- rnb-text-end -->
 </div>
 
-<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCmBgYHtyfQ0KbGlicmFyeShMYWhtYW4pDQpsaWJyYXJ5KG1vc2FpYykNCmxpYnJhcnkodGlkeXIpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpgYGANCg0KYGBge3J9DQpkYXRhKCJCYXR0aW5nIikNCmBgYA0KDQojIyBEYXRhIFByZXBhcmF0aW9uIChMZXNzb24gMSAmIDIpDQoNCiMjIEV4cGxvcmF0b3J5IEFuYWx5c2lzIChMZXNzb24gMSAmIDIpDQpMZXNzb25zIDEgYW5kIDIgd2lsbCBqdXN0IGJlIHBhcnRzIG9mIHRoZSBvdmVyYWxsIHByb2plY3QuIFNpbXBsZSB0aGluZ3MgbGlrZSBkYXRhIG1hbmlwdWxhdGlvbiwgYXBwbHkgZnVuY3Rpb25zLCBib3hwbG90cywgZXRjLiBUaGlzIHdpbGwgYmUgZGF0YSBwcmVwYXJhdGlvbiBpdGVtcyBhbmQgZXhwbG9yYXRvcnkgYW5hbHlzaXMuDQoNCg0KIyMgMC1kaW1lbnNpb25hbCBSZWR1Y3Rpb24gKExlc3NvbiA0KQ0KDQojIyMjIEJvb3RzdHJhcHBpbmcNCg0KIyMgUENBIChMZXNzb24gNCkNCg0KIyMjIyBTY3JlZXBsb3QNCg0KIyMjIyBCaXBsb3QNCg0KIyMgQ2x1c3RlciBBbmFseXNpcyAoTGVzc29uIDUpDQoNCiMjIyMgU2lsaG91ZXR0ZQ0KDQojIyMjIERpYW5hDQoNCiMjIExpbmVhciBSZWdyZXNzaW9uIChMZXNzb24gNikNCg0KIyMgU2ltcGxlIExpbmVhciBSZWdyZXNzaW9uDQoNCiMjIE11bHRpcGxlIExpbmVhciBSZWdyZXNzaW9uDQo=</div>
+<div id="rmd-source-code">LS0tDQp0aXRsZTogIlIgTm90ZWJvb2siDQpvdXRwdXQ6IGh0bWxfbm90ZWJvb2sNCmVkaXRvcl9vcHRpb25zOiANCiAgY2h1bmtfb3V0cHV0X3R5cGU6IGlubGluZQ0KLS0tDQoNCmBgYHtyfQ0KbGlicmFyeShMYWhtYW4pDQpsaWJyYXJ5KG1vc2FpYykNCmxpYnJhcnkodGlkeXIpDQpsaWJyYXJ5KHRpZHl2ZXJzZSkNCmxpYnJhcnkoZHBseXIpDQpgYGANCg0KYGBge3J9DQojTG9hZCBpbiBQZW9wbGUgYW5kIEJhdHRpbmcgRGF0YWZyYW1lcw0KZGF0YSgiUGVvcGxlIikgDQpkYXRhKCJCYXR0aW5nIikNCmRhdGEoIlBpdGNoaW5nIikNCmBgYA0KDQpgYGB7cn0NCiNNZXJnZXMgcGxheWVyIG5hbWUgdG8gQmF0dGluZyBkYXRhLiANCg0KUGVvcGxlJG5hbWUgPC0gcGFzdGUoUGVvcGxlJG5hbWVGaXJzdCwgUGVvcGxlJG5hbWVMYXN0LCBzZXAgPSAiICIpDQoNCmJhdHRpbmcgPC0gbWVyZ2UoQmF0dGluZywNCiAgICAgICAgICAgICAgICAgUGVvcGxlWyxjKCJwbGF5ZXJJRCIsICJuYW1lIildLA0KICAgICAgICAgICAgICAgICBieSA9ICJwbGF5ZXJJRCIsIGFsbC54ID0gVFJVRSkNCg0KI01lcmdlcyBwbGF5ZXIgbmFtZSB0byBQaXRjaGluZyBkYXRhLg0KDQpQZW9wbGUkbmFtZSA8LSBwYXN0ZShQZW9wbGUkbmFtZUZpcnN0LCBQZW9wbGUkbmFtZUxhc3QsIHNlcCA9ICIgIikNCg0KcGl0Y2hpbmcgPC0gbWVyZ2UoUGl0Y2hpbmcsDQogICAgICAgICAgICAgICAgIFBlb3BsZVssYygicGxheWVySUQiLCAibmFtZSIpXSwNCiAgICAgICAgICAgICAgICAgYnkgPSAicGxheWVySUQiLCBhbGwueCA9IFRSVUUpDQpgYGANCg0KIyMgRGF0YSBQcmVwYXJhdGlvbiAoTGVzc29uIDEgJiAyKQ0KDQojIyBFeHBsb3JhdG9yeSBBbmFseXNpcyAoTGVzc29uIDEgJiAyKQ0KTGVzc29ucyAxIGFuZCAyIHdpbGwganVzdCBiZSBwYXJ0cyBvZiB0aGUgb3ZlcmFsbCBwcm9qZWN0LiBTaW1wbGUgdGhpbmdzIGxpa2UgZGF0YSBtYW5pcHVsYXRpb24sIGFwcGx5IGZ1bmN0aW9ucywgYm94cGxvdHMsIGV0Yy4gVGhpcyB3aWxsIGJlIGRhdGEgcHJlcGFyYXRpb24gaXRlbXMgYW5kIGV4cGxvcmF0b3J5IGFuYWx5c2lzLg0KDQoNCiMjIDAtZGltZW5zaW9uYWwgUmVkdWN0aW9uIChMZXNzb24gNCkNCg0KIyMjIyBCb290c3RyYXBwaW5nDQoNCiMjIFBDQSAoTGVzc29uIDQpDQoNCiMjIyMgU2NyZWVwbG90DQoNCiMjIyMgQmlwbG90DQoNCiMjIENsdXN0ZXIgQW5hbHlzaXMgKExlc3NvbiA1KQ0KDQojIyMjIFNpbGhvdWV0dGUNCg0KIyMjIyBEaWFuYQ0KDQojIyBMaW5lYXIgUmVncmVzc2lvbiAoTGVzc29uIDYpDQoNCiMjIFNpbXBsZSBMaW5lYXIgUmVncmVzc2lvbg0KDQojIyBNdWx0aXBsZSBMaW5lYXIgUmVncmVzc2lvbg0K</div>
 
 
 
