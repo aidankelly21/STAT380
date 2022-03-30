@@ -8,5 +8,5 @@ editor_options:
 ```{r}
 library(Lahman)
 library(mosaic)
-libary(c)
+library(cs)
 ```
