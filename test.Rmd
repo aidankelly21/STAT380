@@ -41,7 +41,7 @@ pitching <- merge(Pitching,
 ## Data Preparation (Lesson 1 & 2)
 
 ```{r}
-#Keep players with over 100 AB
+#Keep players with over 100 at bats. (We can change this value if necessary).
 #Creating batting average variable.
 
 batting <- batting %>%
