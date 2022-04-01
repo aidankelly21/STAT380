@@ -6,6 +6,8 @@ editor_options:
 ---
 
 ```{r}
+rm(list = ls())
+
 library(Lahman)
 library(mosaic)
 library(tidyr)
@@ -30,7 +32,7 @@ bstats <- battingStats()
 
 People$name <- paste(People$nameFirst, People$nameLast, sep = " ")
 
-batting <- merge(Batting,
+batting_name <- merge(Batting,
                  People[,c("playerID", "name")],
                  by = "playerID", all.x = TRUE)
 
@@ -38,7 +40,7 @@ batting <- merge(Batting,
 
 People$name <- paste(People$nameFirst, People$nameLast, sep = " ")
 
-pitching <- merge(Pitching,
+pitching_name <- merge(Pitching,
                  People[,c("playerID", "name")],
                  by = "playerID", all.x = TRUE)
 ```
@@ -131,6 +133,22 @@ summary(hitters3)
 ```
 ```{r}
 summary(hitters4)
+```
+
+```{r}
+#Remove non-numerical values
+batting_num <- batting_name %>%
+  select_if(batting_name, is.numeric)
+  
+```
+
+```{r}
+batting_num <- batting_num %>%
+  select("R", "H", "HR", "RBI", "SO", "BA", "PA", "OPS", "BABIP")
+```
+
+```{r}
+pairs(batting_num)
 ```
 
 ## 0-dimensional Reduction (Lesson 4)
