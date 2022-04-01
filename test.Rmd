@@ -46,7 +46,7 @@ pitching <- merge(Pitching,
 ## Data Preparation (Lesson 1 & 2)
 
 ```{r}
-#Keep players with over 100 at bats. (We can change this value if necessary).
+#Keep players with over 150 at bats. (We can change this value if necessary).
 #Creating batting average variable.
 
 batting <- bstats %>%
@@ -64,6 +64,7 @@ b <- ggplot(batting, aes(x = teamID, y = HR)) +
 b
 
 ```
+
 ```{r}
 hitters1 <- batting %>%
   filter(yearID < 1895) %>%
@@ -78,7 +79,7 @@ hitters3 <- batting %>%
   select(SlugPct)
 
 hitters4 <- batting %>%
-  filter(yearID > 1968) %>%
+  filter(yearID > 1969) %>%
   select(SlugPct)
 #Organizing 4 different datasets looking at slugging percentage for the following boxplots. All of these are somewhat different eras, with the most dramatic split being from before 1920 (pre-Babe Ruth) and after 1920 (during and post-Babe Ruth)
 ```
@@ -90,6 +91,7 @@ boxplot(hitters1,
         col = "blue",
         horizontal = TRUE)
 ```
+
 ```{r}
 boxplot(hitters2, 
         main = "Slugging percentage from 1895-1920",
@@ -97,6 +99,7 @@ boxplot(hitters2,
         col = "yellow",
         horizontal = TRUE)
 ```
+
 ```{r}
 boxplot(hitters3, 
         main = "Slugging percentage from 1921-1968",
@@ -104,6 +107,7 @@ boxplot(hitters3,
         col = "red",
         horizontal = TRUE)
 ```
+
 ```{r}
 boxplot(hitters4, 
         main = "Slugging percentage from 1969 - present",
@@ -120,15 +124,19 @@ sapply(hitters3, mean, na.rm = T)
 sapply(hitters4, mean, na.rm = T)
 #Notice that gigantic increase between hitters2 and hitters3
 ```
+
 ```{r}
 summary(hitters1)
 ```
+
 ```{r}
 summary(hitters2)
 ```
+
 ```{r}
 summary(hitters3)
 ```
+
 ```{r}
 summary(hitters4)
 ```
