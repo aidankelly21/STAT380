@@ -154,15 +154,10 @@ summary(hitters4)
 ```
 
 ```{r}
-#Remove non-numerical values
-batting_num <- batting_name %>%
-  select_if(batting_name, is.numeric)
+#Keep batting stats that we want for pairs.
+batting_num <- bstats %>%
+  select('BA', 'PA', 'SlugPct', "OBP", "OPS", "BABIP")
   
-```
-
-```{r}
-batting_num <- batting_num %>%
-  select("R", "H", "HR", "RBI", "SO", "BA", "PA", "OPS", "BABIP")
 ```
 
 ```{r}
