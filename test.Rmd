@@ -15,6 +15,8 @@ library(tidyverse)
 library(dplyr)
 library(mplot)
 library(ggplot2)
+library(cluster)
+library(factoextra)
 ```
 
 ```{r}
@@ -167,6 +169,7 @@ pairs(batting_num)
 
 ## 0-dimensional Reduction (Lesson 4)
 
+
 #### Bootstrapping
 
 ## PCA (Lesson 4)
@@ -176,6 +179,15 @@ pairs(batting_num)
 #### Biplot
 
 ## Cluster Analysis (Lesson 5)
+```{r}
+eu_dist <- get_dist(hitters4, method = 'euclidean')
+```
+
+```{r}
+hc_complete <- hclust(eu_dist, method='complete')
+
+plot(hc_complete)
+```
 
 #### Silhouette
 
