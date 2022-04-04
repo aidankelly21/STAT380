@@ -15,10 +15,7 @@ library(tidyverse)
 library(dplyr)
 library(mplot)
 library(ggplot2)
-<<<<<<< HEAD
 library(cluster)
-=======
->>>>>>> b04cb5b5957a3ed2fb8943798fee8dafe331c80c
 library(factoextra)
 ```
 
@@ -175,8 +172,9 @@ careerBatting <- na.omit(bstats)
 
 ```{r}
 careerBatting <- careerBatting %>%
+  select(playerID, BA, PA, SlugPct, OBP, SO, HR) %>%
   group_by(playerID) %>%
-  summarise(across(everything(), mean, na.rm = TRUE))
+  summarise_all('mean')
 ```
 
 ```{r}
