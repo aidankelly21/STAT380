@@ -15,6 +15,10 @@ library(tidyverse)
 library(dplyr)
 library(mplot)
 library(ggplot2)
+<<<<<<< HEAD
+library(cluster)
+=======
+>>>>>>> b04cb5b5957a3ed2fb8943798fee8dafe331c80c
 library(factoextra)
 ```
 
@@ -182,6 +186,7 @@ pairs()
 
 ## 0-dimensional Reduction (Lesson 4)
 
+
 #### Bootstrapping
 
 ## PCA (Lesson 4)
@@ -237,6 +242,15 @@ res %>%
 
 
 ## Cluster Analysis (Lesson 5)
+```{r}
+eu_dist <- get_dist(hitters4, method = 'euclidean')
+```
+
+```{r}
+hc_complete <- hclust(eu_dist, method='complete')
+
+plot(hc_complete)
+```
 
 #### Silhouette
 
