@@ -45,6 +45,16 @@ pitching_name <- merge(Pitching,
                  by = "playerID", all.x = TRUE)
 ```
 
+```{r}
+#Creating additional stats for bstats
+bstats[is.na(bstats)] = 0
+
+bstats <- bstats %>%
+  mutate(K_Percent = SO / PA) %>%
+  mutate(BB_Percent = (BB + IBB) / PA)
+  
+```
+
 ## Data Preparation (Lesson 1 & 2)
 
 ```{r}
@@ -153,6 +163,7 @@ batting_num <- bstats %>%
 ```{r}
 pairs(batting_num)
 ```
+
 
 ## 0-dimensional Reduction (Lesson 4)
 
