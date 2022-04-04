@@ -184,7 +184,10 @@ careerBatting <- careerBatting %>%
 ```
 
 ```{r}
-pairs()
+careerBatting_num <- careerBatting%>%
+  select(BA, PA, SlugPct, OBP, SO, HR)
+
+pairs(careerBatting_num)
 ```
 
 
