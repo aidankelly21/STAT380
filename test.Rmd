@@ -50,11 +50,17 @@ pitching_name <- merge(Pitching,
 ```{r}
 #Creating additional stats for bstats
 bstats[is.na(bstats)] = 0
+#is.nan(bstats)
 
 bstats <- bstats %>%
   mutate(K_Percent = SO / PA) %>%
-  mutate(BB_Percent = (BB + IBB) / PA)
-  
+  mutate(BB_Percent = (BB + IBB) / PA) %>%
+  mutate_all(~replace(., is.nan(.), 0))
+
+```
+```{r}
+bstats <- bstats %>%
+  mutate_at(vars(K_Percent, BB_Percent), funs(round(., 3)))
 ```
 
 ## Data Preparation (Lesson 1 & 2)
@@ -158,7 +164,7 @@ summary(hitters4)
 ```{r}
 #Keep batting stats that we want for pairs.
 batting_num <- bstats %>%
-  select('BA', 'PA', 'SlugPct', "OBP", "SO", "HR")
+  select('H', 'PA', 'OPS', "BB_Percent", "K_Percent", "HR")
   
 ```
 
