@@ -171,6 +171,20 @@ batting_num <- bstats %>%
 ```{r}
 pairs(batting_num)
 ```
+#### Career Batting Stats
+```{r}
+careerBatting <- na.omit(bstats)
+```
+
+```{r}
+careerBatting <- careerBatting %>%
+  group_by(playerID) %>%
+  summarise(across(everything(), mean, na.rm = TRUE))
+```
+
+```{r}
+pairs()
+```
 
 
 ## 0-dimensional Reduction (Lesson 4)
@@ -183,6 +197,17 @@ pairs(batting_num)
 res <- batting_num %>% prcomp(scale = TRUE)
 res
 ```
+
+```{r}
+loadings <- res$rotation
+loadings
+```
+
+```{r}
+score_mat <- res$x
+score_mat
+```
+
 
 ```{r}
 get_eig(res)
