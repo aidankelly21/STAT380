@@ -15,6 +15,7 @@ library(tidyverse)
 library(dplyr)
 library(mplot)
 library(ggplot2)
+library(factoextra)
 ```
 
 ```{r}
@@ -170,10 +171,45 @@ pairs(batting_num)
 #### Bootstrapping
 
 ## PCA (Lesson 4)
+```{r}
+res <- batting_num %>% prcomp(scale = TRUE)
+res
+```
+
+```{r}
+get_eig(res)
+```
 
 #### Screeplot
+```{r}
+get_eig(res) %>%
+  ggplot(aes(x = 1:6, y = cumulative.variance.percent)) +
+  geom_line() +
+  geom_point() +
+  geom_hline(yintercept = 80) +
+  xlab("Principal Component") +
+  ylab("Proportion of Variance Explained") +
+  ggtitle("Scree Plot of Principal Component for Batting Statistics")
+```
+
+2 Principal Components: PC1 and PC2
+
+```{r}
+fviz_screeplot(res, main = "Scree Plot")
+```
+
+Can Identify an elbow in 3.
 
 #### Biplot
+```{r}
+res %>%
+  fviz_pca_var(axes = c(1,2),
+               col.var = "contrib",
+               gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+               repel = TRUE
+               )
+```
+
 
 ## Cluster Analysis (Lesson 5)
 
