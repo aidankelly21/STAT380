@@ -58,6 +58,7 @@ bstats <- bstats %>%
   mutate_all(~replace(., is.nan(.), 0))
 
 ```
+
 ```{r}
 bstats <- bstats %>%
   mutate_at(vars(K_Percent, BB_Percent), funs(round(., 3)))
@@ -74,6 +75,10 @@ batting <- bstats %>%
   
 ```
 
+```{r}
+bstats %>%
+  filter(playerID == "bogaexa01")
+```
 
 ## Exploratory Analysis (Lesson 1 & 2)
 Lessons 1 and 2 will just be parts of the overall project. Simple things like data manipulation, apply functions, boxplots, etc. This will be data preparation items and exploratory analysis.
