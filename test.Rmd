@@ -183,12 +183,16 @@ careerBatting <- na.omit(bstats)
 
 ```{r}
 careerBatting <- careerBatting %>%
+  select(playerID, BA, PA, SlugPct, OBP, SO, HR) %>%
   group_by(playerID) %>%
-  summarise(across(everything(), mean, na.rm = TRUE))
+  summarise_all('mean')
 ```
 
 ```{r}
-pairs()
+careerBatting_num <- careerBatting%>%
+  select(BA, PA, SlugPct, OBP, SO, HR)
+
+pairs(careerBatting_num)
 ```
 
 
