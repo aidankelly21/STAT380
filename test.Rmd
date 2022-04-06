@@ -17,6 +17,7 @@ library(mplot)
 library(ggplot2)
 library(cluster)
 library(factoextra)
+library(corrplot)
 ```
 
 ```{r}
@@ -169,7 +170,8 @@ summary(hitters4)
 ```{r}
 #Keep batting stats that we want for pairs.
 batting_num <- bstats %>%
-  select('H', 'PA', 'OPS', "BB_Percent", "K_Percent", "HR")
+  filter(PA >= 150) %>%
+  select("BA", 'OBP', 'SlugPct', "SO", "BB", "HR")
   
 ```
 
@@ -190,9 +192,19 @@ careerBatting <- careerBatting %>%
 
 ```{r}
 careerBatting_num <- careerBatting%>%
+  filter(PA >= 150) %>%
   select(BA, PA, SlugPct, OBP, SO, HR)
 
 pairs(careerBatting_num)
+```
+```{r}
+corrmatrix <- cor(batting_num)
+corrplot(corrmatrix, method = 'number') #Gives us correlation from pairs graph.
+```
+
+```{r}
+careerBatting_num1 <- careerBatting_num %>%
+  filter(PA > 500)
 ```
 
 
@@ -255,7 +267,11 @@ res %>%
 
 ## Cluster Analysis (Lesson 5)
 ```{r}
-eu_dist <- get_dist(hitters4, method = 'euclidean')
+#NOT COMPLETE!!!!! This was just a test, bstats is way too big.
+bstats_best <- bstats %>%
+  filter(PA >= 600)
+
+eu_dist <- get_dist(careerBatting_num1, method = 'euclidean')
 ```
 
 ```{r}
@@ -265,6 +281,26 @@ plot(hc_complete)
 ```
 
 #### Silhouette
+
+```{r}
+res_test <- careerBatting_num1 %>% kmeans(7)
+  str(res_test)
+```
+
+
+```{r}
+distance <- get_dist(careerBatting_num1, method="euclidean")
+sil <- silhouette(x = res_test$cluster, dist = distance)
+summary(sil)
+sil %>% head()
+```
+
+```{r}
+fviz_silhouette(sil)
+```
+```{r}
+fviz_nbclust(careerBatting_num1, hcut, hc_method = "complete", hc_metric = "euclidean", method = "wss")
+```
 
 #### Diana
 
