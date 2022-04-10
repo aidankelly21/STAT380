@@ -64,6 +64,15 @@ bstats <- bstats %>%
 bstats <- bstats %>%
   mutate_at(vars(K_Percent, BB_Percent), funs(round(., 3)))
 ```
+```{r}
+salary_batting <- bstats %>%
+              filter(yearID >= 1985) %>%
+              left_join(select(Salaries, playerID, yearID, teamID, salary), 
+                         by=c("playerID", "yearID", "teamID"))
+str(salary_batting)
+
+salary_batting[is.na(salary_batting)] <- 0
+```
 
 ## Data Preparation (Lesson 1 & 2)
 
@@ -79,6 +88,13 @@ batting <- bstats %>%
 ```{r}
 bstats %>%
   filter(playerID == "bogaexa01")
+```
+```{r}
+batting <- Batting %>%
+              filter(yearID >= 1985) %>%
+              left_join(select(Salaries, playerID, yearID, teamID, salary), 
+                         by=c("playerID", "yearID", "teamID"))
+str(batting)
 ```
 
 ## Exploratory Analysis (Lesson 1 & 2)
@@ -264,6 +280,36 @@ res %>%
                )
 ```
 
+## Second Biplot Using Salary Data (Might Be Just a Test)
+```{r}
+salary_batting_num <- salary_batting%>%
+  filter(PA >= 150) %>%
+  select(BA, OBP, SlugPct, SO, HR, salary)
+
+pairs(salary_batting_num)
+```
+```{r}
+res1 <- salary_batting_num %>% prcomp(scale = TRUE)
+res1
+```
+```{r}
+loadings1 <- res1$rotation
+loadings1
+```
+
+```{r}
+score_mat1 <- res1$x
+score_mat1
+```
+```{r}
+res1 %>%
+  fviz_pca_var(axes = c(1,2),
+               col.var = "contrib",
+               gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+               repel = TRUE
+               )
+```
+Conclusion: You hit dingers, you get paid.
 
 ## Cluster Analysis (Lesson 5)
 ```{r}
@@ -298,9 +344,30 @@ sil %>% head()
 ```{r}
 fviz_silhouette(sil)
 ```
+
 ```{r}
 fviz_nbclust(careerBatting_num1, hcut, hc_method = "complete", hc_metric = "euclidean", method = "wss")
 ```
+
+```{r}
+##This is to test other values of K for the silhouette method.
+res_test1 <- careerBatting_num1 %>% kmeans(10)
+  str(res_test1)
+```
+
+
+```{r}
+##Tests cont.
+distance <- get_dist(careerBatting_num1, method="euclidean")
+sil <- silhouette(x = res_test1$cluster, dist = distance)
+summary(sil)
+sil %>% head()
+```
+
+```{r}
+fviz_silhouette(sil) ##Tests cont.
+```
+
 
 #### Diana
 
@@ -310,6 +377,44 @@ fviz_nbclust(careerBatting_num1, hcut, hc_method = "complete", hc_metric = "eucl
 
 ## Multiple Linear Regression
 
+<<<<<<< HEAD
 ## Resampling Methods
 
 ## Feature Selection
+=======
+## Salary Data
+```{r}
+franchise <- c(`ANA` = "LAA", `ARI` = "ARI", `ATL` = "ATL", 
+               `BAL` = "BAL", `BOS` = "BOS", `CAL` = "LAA",
+               `CHA` = "CHA", `CHN` = "CHN", `CIN` = "CIN", 
+               `CLE` = "CLE", `COL` = "COL", `DET` = "DET", 
+               `FLO` = "MIA", `HOU` = "HOU", `KCA` = "KCA", 
+               `LAA` = "LAA", `LAN` = "LAN", `MIA` = "MIA", 
+               `MIL` = "MIL", `MIN` = "MIN", `ML4` = "MIL", 
+               `MON` = "WAS", `NYA` = "NYA", `NYM` = "NYN", 
+               `NYN` = "NYN", `OAK` = "OAK", `PHI` = "PHI", 
+               `PIT` = "PIT", `SDN` = "SDN", `SEA` = "SEA",
+               `SFG` = "SFN", `SFN` = "SFN", `SLN` = "SLN", 
+               `TBA` = "TBA", `TEX` = "TEX", `TOR` = "TOR",
+               `WAS` = "WAS")
+```
+
+```{r}
+Salaries$franchise <- unname(franchise[Salaries$teamID])
+```
+
+
+```{r}
+avg_team_salaries <- Salaries %>%
+    group_by(yearID, franchise, lgID) %>%
+    summarise(salary= mean(salary)/1e6) %>%
+    filter(!(franchise == "CLE" & lgID == "NL"))
+```
+```{r}
+ggplot(avg_team_salaries, 
+       aes(x = yearID, y = salary, group = factor(franchise))) +
+       geom_path() +
+       labs(x = "Year", y = "Average team salary (millions USD)")
+```
+
+>>>>>>> 82ab9af358f64d6e41c89024b53f893b866eece7
