@@ -191,7 +191,7 @@ careerBatting <- careerBatting %>%
 ```
 
 ```{r}
-careerBatting_num <- careerBatting%>%
+careerBatting_num <- careerBatting %>%
   filter(PA >= 150) %>%
   select(BA, PA, SlugPct, OBP, SO, HR)
 
@@ -275,7 +275,7 @@ eu_dist <- get_dist(careerBatting_num1, method = 'euclidean')
 ```
 
 ```{r}
-hc_complete <- hclust(eu_dist, method='complete')
+hc_complete <- hclust(eu_dist, method = 'complete')
 
 plot(hc_complete)
 ```
@@ -289,7 +289,7 @@ res_test <- careerBatting_num1 %>% kmeans(7)
 
 
 ```{r}
-distance <- get_dist(careerBatting_num1, method="euclidean")
+distance <- get_dist(careerBatting_num1, method = "euclidean")
 sil <- silhouette(x = res_test$cluster, dist = distance)
 summary(sil)
 sil %>% head()
@@ -309,3 +309,7 @@ fviz_nbclust(careerBatting_num1, hcut, hc_method = "complete", hc_metric = "eucl
 ## Simple Linear Regression
 
 ## Multiple Linear Regression
+
+## Resampling Methods
+
+## Feature Selection
