@@ -19,7 +19,7 @@ library(cluster)
 library(factoextra)
 library(corrplot)
 library(data.table)
-library(modelr)
+library(mod)
 ```
 
 ```{r}
@@ -393,7 +393,7 @@ teamPayroll = merge(teams, payroll, by = c("teamID", "yearID"))
 ```
 
 ```{r}
-ggplot(data = teamPayroll, aes(x = payroll, y = WinPercent)) + geom_point()  + labs(title = "") +
+ggplot(data = teamPayroll, aes(x = payroll, y = WinPercent)) + geom_point()  + labs(x = "Payroll (in millions)", y = "Win Percentage") +
   geom_smooth(method = lm, se = FALSE)
 
 ```
@@ -408,18 +408,26 @@ summary(mod_lm)
 ```{r}
 payroll_pred <- teamPayroll %>%
   add_predictions(mod_lm)
-payroll_pred %>% head()
+payroll_pred %>%
+  filter(yearID >= 2010) %>%
+  arrange(desc(pred)) %>%
+  head(25)
 ```
-
+```{r}
+payroll_pred %>%
+  filter(yearID >= 2010) %>%
+  arrange(desc(WinPercent)) %>%
+  head(25)
+```
+Only five teams are in the top 25 of both payroll and win percentage in the 2010s. These teams are the 2011 Phillies, 2011 Yankees, 2010 Yankees, 2012 Yankees, and 2016 Rangers. This shows that spending the most money doesn't automatically mean you are getting the best product on the field.
 ## Simple Linear Regression
 
 ## Multiple Linear Regression
 
-<<<<<<< HEAD
 ## Resampling Methods
 
 ## Feature Selection
-=======
+
 ## Salary Data
 ```{r}
 franchise <- c(`ANA` = "LAA", `ARI` = "ARI", `ATL` = "ATL", 
@@ -455,4 +463,4 @@ ggplot(avg_team_salaries,
        labs(x = "Year", y = "Average team salary (millions USD)")
 ```
 
->>>>>>> 82ab9af358f64d6e41c89024b53f893b866eece7
+
