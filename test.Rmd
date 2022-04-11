@@ -18,6 +18,8 @@ library(ggplot2)
 library(cluster)
 library(factoextra)
 library(corrplot)
+library(data.table)
+library(modelr)
 ```
 
 ```{r}
@@ -372,6 +374,42 @@ fviz_silhouette(sil) ##Tests cont.
 #### Diana
 
 ## Linear Regression (Lesson 6)
+
+Linear Regression comparing team payroll and win rate.
+```{r}
+teams = as.data.table(Teams)
+teams = teams[, .(yearID,
+                  lgID = as.character(lgID),
+                  teamID = as.character(teamID),
+                  franchID = as.character(franchID),
+                  Rank, G, W, L, R, ERA, SO,
+                  WinPercent = W/(W+L))]
+
+salaries = as.data.table(Salaries)
+salaries = salaries[, c("lgID", "teamID", "salary1M") :=
+                      list(as.character(lgID), as.character(teamID), salary / 1e6L)]
+payroll = salaries[, .(payroll = sum(salary1M)), by=.(teamID, yearID)]
+teamPayroll = merge(teams, payroll, by = c("teamID", "yearID"))
+```
+
+```{r}
+ggplot(data = teamPayroll, aes(x = payroll, y = WinPercent)) + geom_point()  + labs(title = "") +
+  geom_smooth(method = lm, se = FALSE)
+
+```
+```{r}
+mod_lm <- lm(data = teamPayroll, WinPercent~payroll)
+mod_lm
+```
+
+```{r}
+summary(mod_lm)
+```
+```{r}
+payroll_pred <- teamPayroll %>%
+  add_predictions(mod_lm)
+payroll_pred %>% head()
+```
 
 ## Simple Linear Regression
 
