@@ -18,6 +18,8 @@ library(ggplot2)
 library(cluster)
 library(factoextra)
 library(corrplot)
+library(data.table)
+library(mod)
 ```
 
 ```{r}
@@ -85,7 +87,7 @@ bstats %>%
 Lessons 1 and 2 will just be parts of the overall project. Simple things like data manipulation, apply functions, boxplots, etc. This will be data preparation items and exploratory analysis.
 
 ```{r}
-b <- ggplot(batting, aes(x = teamID, y = HR)) +
+b <- ggplot(batting1, aes(x = teamID, y = HR)) +
   geom_boxplot(col = "black", aes(fill = teamID))
 b
 
@@ -191,7 +193,7 @@ careerBatting <- careerBatting %>%
 ```
 
 ```{r}
-careerBatting_num <- careerBatting%>%
+careerBatting_num <- careerBatting %>%
   filter(PA >= 150) %>%
   select(BA, PA, SlugPct, OBP, SO, HR)
 
@@ -275,7 +277,7 @@ eu_dist <- get_dist(careerBatting_num1, method = 'euclidean')
 ```
 
 ```{r}
-hc_complete <- hclust(eu_dist, method='complete')
+hc_complete <- hclust(eu_dist, method = 'complete')
 
 plot(hc_complete)
 ```
@@ -289,7 +291,7 @@ res_test <- careerBatting_num1 %>% kmeans(7)
 
 
 ```{r}
-distance <- get_dist(careerBatting_num1, method="euclidean")
+distance <- get_dist(careerBatting_num1, method = "euclidean")
 sil <- silhouette(x = res_test$cluster, dist = distance)
 summary(sil)
 sil %>% head()
@@ -326,6 +328,95 @@ fviz_silhouette(sil)
 
 ## Linear Regression (Lesson 6)
 
+Linear Regression comparing team payroll and win rate.
+```{r}
+teams = as.data.table(Teams)
+teams = teams[, .(yearID,
+                  lgID = as.character(lgID),
+                  teamID = as.character(teamID),
+                  franchID = as.character(franchID),
+                  Rank, G, W, L, R, ERA, SO,
+                  WinPercent = W/(W+L))]
+
+salaries = as.data.table(Salaries)
+salaries = salaries[, c("lgID", "teamID", "salary1M") :=
+                      list(as.character(lgID), as.character(teamID), salary / 1e6L)]
+payroll = salaries[, .(payroll = sum(salary1M)), by=.(teamID, yearID)]
+teamPayroll = merge(teams, payroll, by = c("teamID", "yearID"))
+```
+
+```{r}
+ggplot(data = teamPayroll, aes(x = payroll, y = WinPercent)) + geom_point()  + labs(x = "Payroll (in millions)", y = "Win Percentage") +
+  geom_smooth(method = lm, se = FALSE)
+
+```
+```{r}
+mod_lm <- lm(data = teamPayroll, WinPercent~payroll)
+mod_lm
+```
+
+```{r}
+summary(mod_lm)
+```
+```{r}
+payroll_pred <- teamPayroll %>%
+  add_predictions(mod_lm)
+
+payroll_pred %>%
+  filter(yearID >= 2010) %>%
+  arrange(desc(pred)) %>%
+  head(25)
+```
+```{r}
+payroll_pred %>%
+  filter(yearID >= 2010) %>%
+  arrange(desc(WinPercent)) %>%
+  head(25)
+```
+Only five teams are in the top 25 of both payroll and win percentage in the 2010s. These teams are the 2011 Phillies, 2011 Yankees, 2010 Yankees, 2012 Yankees, and 2016 Rangers. This shows that spending the most money doesn't automatically mean you are getting the best product on the field.
 ## Simple Linear Regression
 
 ## Multiple Linear Regression
+<<<<<<< HEAD
+=======
+
+## Resampling Methods
+
+## Feature Selection
+
+## Salary Data
+```{r}
+franchise <- c(`ANA` = "LAA", `ARI` = "ARI", `ATL` = "ATL", 
+               `BAL` = "BAL", `BOS` = "BOS", `CAL` = "LAA",
+               `CHA` = "CHA", `CHN` = "CHN", `CIN` = "CIN", 
+               `CLE` = "CLE", `COL` = "COL", `DET` = "DET", 
+               `FLO` = "MIA", `HOU` = "HOU", `KCA` = "KCA", 
+               `LAA` = "LAA", `LAN` = "LAN", `MIA` = "MIA", 
+               `MIL` = "MIL", `MIN` = "MIN", `ML4` = "MIL", 
+               `MON` = "WAS", `NYA` = "NYA", `NYM` = "NYN", 
+               `NYN` = "NYN", `OAK` = "OAK", `PHI` = "PHI", 
+               `PIT` = "PIT", `SDN` = "SDN", `SEA` = "SEA",
+               `SFG` = "SFN", `SFN` = "SFN", `SLN` = "SLN", 
+               `TBA` = "TBA", `TEX` = "TEX", `TOR` = "TOR",
+               `WAS` = "WAS")
+```
+
+```{r}
+Salaries$franchise <- unname(franchise[Salaries$teamID])
+```
+
+
+```{r}
+avg_team_salaries <- Salaries %>%
+    group_by(yearID, franchise, lgID) %>%
+    summarise(salary= mean(salary)/1e6) %>%
+    filter(!(franchise == "CLE" & lgID == "NL"))
+```
+```{r}
+ggplot(avg_team_salaries, 
+       aes(x = yearID, y = salary, group = factor(franchise))) +
+       geom_path() +
+       labs(x = "Year", y = "Average team salary (millions USD)")
+```
+
+
