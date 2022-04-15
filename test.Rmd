@@ -68,6 +68,17 @@ bstats <- bstats %>%
   mutate_at(vars(K_Percent, BB_Percent), funs(round(., 3)))
 ```
 
+```{r}
+bstats_salary <- bstats %>%
+              filter(yearID >= 1985) %>%
+              left_join(select(Salaries, playerID, yearID, teamID, salary), 
+                         by=c("playerID", "yearID", "teamID"))
+
+bstats_salary[is.na(bstats_salary)] = 0
+str(bstats_salary)
+
+```
+
 ## Data Preparation (Lesson 1 & 2)
 
 ```{r}
@@ -378,7 +389,6 @@ Only five teams are in the top 25 of both payroll and win percentage in the 2010
 ## Simple Linear Regression
 
 ## Multiple Linear Regression
-<<<<<<< HEAD
 ```{r}
 salary_batting <- salary_batting %>%
   filter(PA >= 100)
@@ -393,11 +403,6 @@ summary(lm_mod)
 lm_mod_prd <- salary_batting %>% add_predictions(lm_mod)
 lm_mod_prd
 ```
-
-=======
-<<<<<<< HEAD
-=======
->>>>>>> ee063489bbdf03b92d60072960b192ed3dd4a8b6
 
 ## Resampling Methods
 
