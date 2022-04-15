@@ -379,7 +379,25 @@ Only five teams are in the top 25 of both payroll and win percentage in the 2010
 
 ## Multiple Linear Regression
 <<<<<<< HEAD
+```{r}
+salary_batting <- salary_batting %>%
+  filter(PA >= 100)
+```
+
+
+```{r}
+lm_mod <- lm(salary ~ H, HR, data = salary_batting)
+summary(lm_mod)
+```
+```{r}
+lm_mod_prd <- salary_batting %>% add_predictions(lm_mod)
+lm_mod_prd
+```
+
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> ee063489bbdf03b92d60072960b192ed3dd4a8b6
 
 ## Resampling Methods
 
@@ -410,7 +428,7 @@ Salaries$franchise <- unname(franchise[Salaries$teamID])
 ```{r}
 avg_team_salaries <- Salaries %>%
     group_by(yearID, franchise, lgID) %>%
-    summarise(salary= mean(salary)/1e6) %>%
+    summarise(salary = mean(salary)/1e6) %>%
     filter(!(franchise == "CLE" & lgID == "NL"))
 ```
 ```{r}
