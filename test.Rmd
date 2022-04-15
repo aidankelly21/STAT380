@@ -390,17 +390,17 @@ Only five teams are in the top 25 of both payroll and win percentage in the 2010
 
 ## Multiple Linear Regression
 ```{r}
-salary_batting <- salary_batting %>%
+bstats_salary <- bstats_salary %>%
   filter(PA >= 100)
 ```
 
 
 ```{r}
-lm_mod <- lm(salary ~ H, HR, data = salary_batting)
+lm_mod <- lm(salary ~ H, HR, data = bstats_salary)
 summary(lm_mod)
 ```
 ```{r}
-lm_mod_prd <- salary_batting %>% add_predictions(lm_mod)
+lm_mod_prd <- bstats_salary %>% add_predictions(lm_mod)
 lm_mod_prd
 ```
 
