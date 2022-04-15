@@ -20,6 +20,7 @@ library(factoextra)
 library(corrplot)
 library(data.table)
 library(mod)
+library(modelr)
 ```
 
 ```{r}
