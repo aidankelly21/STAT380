@@ -24,6 +24,7 @@ library(modelr)
 library(leaps)
 library(caret)
 library(ISLR2)
+library(ggcorrplot)
 library(glmnet)
 ```
 
@@ -468,6 +469,22 @@ print(model)
 ```{r}
 bstats_salary_numvars <- bstats_salary_21century %>% 
   select(c(6:32))
+```
+
+```{r}
+#Correlation mapping 
+
+#making correlation heat map 
+corr_numeric <- round(cor(bstats_salary_numvars), 1)
+
+#plot to visualize the correlations 
+ggcorrplot(corr_numeric,
+           type = "lower",
+           lab = TRUE, 
+           lab_size = 2,  
+           colors = c("tomato2", "white", "springgreen3"),
+           title="Correlogram of batting Data", 
+           ggtheme=theme_bw)
 ```
 
 ```{r}
