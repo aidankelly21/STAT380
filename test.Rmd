@@ -33,6 +33,7 @@ library(glmnet)
 data("People") 
 data("Batting")
 data("Pitching")
+data("Salaries")
 ```
 
 ```{r}
@@ -48,6 +49,9 @@ names(Batting)
 names(Pitching)
 ```
 
+```{r}
+names(Salaries)
+```
 
 ```{r}
 #Looking at years 
@@ -80,6 +84,7 @@ pitching_name <- merge(Pitching,
 ```{r}
 #Creating additional stats for bstats
 bstats[is.na(bstats)] = 0
+#bstats <- na.omit(bstats)
 #is.nan(bstats)
 
 bstats <- bstats %>%
@@ -101,6 +106,7 @@ bstats_salary <- bstats %>%
                          by=c("playerID", "yearID", "teamID"))
 
 bstats_salary[is.na(bstats_salary)] = 0
+#bstats_salary <- na.omit(bstats_salary)
 str(bstats_salary)
 
 ```
@@ -464,7 +470,7 @@ summary(adv_stat_mod)
 ```{r}
 #including 2002 and up because salary becomes higher
 bstats_salary_21century <- bstats_salary %>%
-  filter(yearID >= 2002, PA >= 250)
+  filter(yearID >= 2002)
 ```
 
 
@@ -476,6 +482,7 @@ bstats_salary_21century %>% head(10)
 ```{r}
 # Salary of hitters with best batting avg 
 top_battingAVG <- bstats_salary_21century%>%
+  filter(PA >= 520, yearID >= 2012) %>%
   select(BA, salary) %>%
   arrange(desc(BA))%>%
   head(1500)
@@ -483,7 +490,11 @@ top_battingAVG <- bstats_salary_21century%>%
   ggplot(data = top_battingAVG, aes(x = BA, y= salary)) +
     geom_point()+
     geom_smooth(method = lm) +
-    labs(title="How Batting AVG affects Salary NON-PITCHERS")
+    labs(title="How Batting AVG affects Salary NON-PITCHERS (PA > 520 & year >= 2012)")
+```
+```{r}
+bstats_salary_21century %>%
+  arrange(desc(yearID))
 ```
 
 
