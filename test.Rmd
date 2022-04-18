@@ -21,6 +21,10 @@ library(corrplot)
 library(data.table)
 library(mod)
 library(modelr)
+library(leaps)
+library(caret)
+library(ISLR2)
+library(glmnet)
 ```
 
 ```{r}
@@ -426,7 +430,271 @@ summary(adv_stat_mod)
 
 ## Resampling Methods
 
+```{r}
+#including 2002 and up because salary becomes higher
+bstats_salary_21century <- bstats_salary %>%
+  filter(yearID >= 2002)
+```
+
+
+```{r}
+bstats_salary_21century %>% head(10)
+```
+
+
+
+```{r}
+# setting seed to generate a reproducible random sampling
+set.seed(123)
+ 
+# defining training control as cross-validation and value of K equal to 10
+train_control <- trainControl(method = "cv",
+                              number = 10)
+
+# training the model
+model <- train(salary ~ OBP, data = bstats_salary_21century,
+               method = "lm",
+               trControl = train_control)
+
+print(model)
+```
+
+
 ## Feature Selection
+```{r}
+bstats_salary_numvars <- bstats_salary_21century %>% 
+  select(c(6:32))
+```
+
+```{r}
+regfit.full = regsubsets(salary ~., data = bstats_salary_numvars,  nvmax = 13, method="exhaustive")
+summary(regfit.full)
+```
+
+```{r}
+summary(regfit.full)$rsq
+```
+
+
+
+```{r}
+plot(summary(regfit.full)$rsq)
+```
+
+```{r}
+reg.summary <- summary(regfit.full) #get the summary
+
+par(mfrow=c(2,2))
+#rss plot -  NOT USEFUL
+plot(reg.summary$rss ,xlab="Number of Variables ",ylab="RSS",type="l")
+
+#adjr2 plot
+plot(reg.summary$adjr2 ,xlab="Number of Variables ", ylab="Adjusted RSq",type="l")
+
+max_adjr2 <- which.max(reg.summary$adjr2)
+points(max_adjr2,reg.summary$adjr2[max_adjr2], col="red",cex=2,pch=20)
+
+# AIC criterion (Cp) to minimize
+plot(reg.summary$cp ,xlab="Number of Variables ",ylab="Cp", type='l')
+
+min_cp <- which.min(reg.summary$cp )
+points(min_cp, reg.summary$cp[min_cp],col="red",cex=2,pch=20)
+
+# BIC criterion to minimize
+plot(reg.summary$bic ,xlab="Number of Variables ",ylab="BIC",type='l')
+
+min_bic <- which.min(reg.summary$bic)
+points(min_bic,reg.summary$bic[min_bic],col="red",cex=2,pch=20)
+```
+
+```{r}
+#Forward stepwise selection
+regfit.fwd = regsubsets(salary ~. , data=bstats_salary_numvars, nvmax=13, method ="forward")
+summary(regfit.fwd)
+```
+
+```{r}
+reg.summary <- summary(regfit.fwd) #get the summary
+
+par(mfrow=c(2,2))
+#rss plot -  NOT USEFUL
+plot(reg.summary$rss ,xlab="Number of Variables ",ylab="RSS",type="l")
+
+#adjr2 plot
+plot(reg.summary$adjr2 ,xlab="Number of Variables ", ylab="Adjusted RSq",type="l")
+
+max_adjr2 <- which.max(reg.summary$adjr2)
+points(max_adjr2,reg.summary$adjr2[max_adjr2], col="red",cex=2,pch=20)
+
+# AIC criterion (Cp) to minimize
+plot(reg.summary$cp ,xlab="Number of Variables ",ylab="Cp", type='l')
+
+min_cp <- which.min(reg.summary$cp )
+points(min_cp, reg.summary$cp[min_cp],col="red",cex=2,pch=20)
+
+# BIC criterion to minimize
+plot(reg.summary$bic ,xlab="Number of Variables ",ylab="BIC",type='l')
+
+min_bic <- which.min(reg.summary$bic)
+points(min_bic,reg.summary$bic[min_bic],col="red",cex=2,pch=20)
+```
+
+```{r}
+#Backwards stepwise selection
+regfit.bwd = regsubsets(salary ~. , data=bstats_salary_numvars,nvmax=13, method ="backward")
+summary(regfit.bwd)
+```
+
+```{r}
+reg.summary <- summary(regfit.bwd) #get the summary
+
+par(mfrow=c(2,2))
+#rss plot -  NOT USEFUL
+plot(reg.summary$rss ,xlab="Number of Variables ",ylab="RSS",type="l")
+
+#adjr2 plot
+plot(reg.summary$adjr2 ,xlab="Number of Variables ", ylab="Adjusted RSq",type="l")
+
+max_adjr2 <- which.max(reg.summary$adjr2)
+points(max_adjr2, reg.summary$adjr2[max_adjr2], col="red", cex=2, pch=20)
+
+# AIC criterion (Cp) to minimize
+plot(reg.summary$cp ,xlab="Number of Variables ",ylab="Cp", type='l')
+
+min_cp <- which.min(reg.summary$cp )
+points(min_cp, reg.summary$cp[min_cp], col="red", cex=2, pch=20)
+
+# BIC criterion to minimize
+plot(reg.summary$bic, xlab="Number of Variables ", ylab="BIC", type='l')
+
+min_bic <- which.min(reg.summary$bic)
+points(min_bic, reg.summary$bic[min_bic], col="red", cex=2, pch=20)
+```
+
+```{r}
+#ridge regression 
+
+# getting the predictors
+x_var <- bstats_salary_numvars %>% select(-salary) %>% as.matrix()
+# getting the independent variable
+y_var <- bstats_salary_numvars[,"salary"]
+```
+
+```{r}
+ridge <- glmnet(x_var, y_var, alpha=0)
+summary(ridge)
+```
+
+```{r}
+cv_ridge <- cv.glmnet(x_var, y_var, alpha = 0)
+cv_ridge
+```
+
+```{r}
+plot(cv_ridge)
+```
+
+```{r}
+cv_ridge$lambda.min
+```
+
+```{r}
+cv_ridge$lambda.1se
+```
+
+```{r}
+lbs_fun <- function(fit, offset_x=1, ...) {
+  L <- length(fit$lambda)
+  x <- log(fit$lambda[L]) + offset_x
+  y <- fit$beta[ ,L]
+  labs <- names(y)
+  text(x, y, labels=labs, ...)
+}
+
+plot(ridge, xvar = "lambda", label=T)
+lbs_fun(ridge) # add namnes
+
+abline(v = log(cv_ridge$lambda.min), col = "red", lty=2) #lambda.min
+abline(v = log(cv_ridge$lambda.1se), col="blue", lty=2)  #lambda.1se
+```
+
+```{r}
+min_ridge <- glmnet(x_var, y_var, alpha=0, lambda = cv_ridge$lambda.min)
+coef(min_ridge)
+```
+
+```{r}
+# Make predictions on the test data
+predictions <- min_ridge %>% predict(x_var) %>% as.vector()
+
+# Model performance metrics
+data.frame(
+  RMSE = RMSE(predictions, y_var),
+  Rsquare = R2(predictions, y_var)
+)
+```
+
+```{r}
+# Lasso 
+
+# getting the predictors
+x_var <- bstats_salary_numvars %>% select(-salary) %>% as.matrix()
+# getting the independent variable
+y_var <- bstats_salary_numvars[,"salary"]
+```
+
+
+```{r}
+lasso <- glmnet(x_var, y_var, alpha=1)
+summary(lasso)
+```
+
+```{r}
+cv_lasso <- cv.glmnet(x_var, y_var, alpha = 1)
+cv_lasso
+```
+
+```{r}
+plot(cv_lasso)
+```
+
+
+```{r}
+lbs_fun <- function(fit, offset_x=1, ...) {
+  L <- length(fit$lambda)
+  x <- log(fit$lambda[L])+ offset_x
+  y <- fit$beta[, L]
+  labs <- names(y)
+  text(x, y, labels=labs, ...)
+}
+plot(lasso, xvar = "lambda", label=T)
+lbs_fun(lasso)
+
+abline(v=log(cv_lasso$lambda.min), col = "red", lty=2)
+abline(v=log(cv_lasso$lambda.1se), col="blue", lty=2)
+```
+
+```{r}
+min_lasso <- glmnet(x_var, y_var, alpha=1, lambda = cv_lasso$lambda.min)
+coef(min_lasso)
+```
+
+```{r}
+se_lasso <- glmnet(x_var, y_var, alpha=1, lambda = cv_lasso$lambda.1se)
+coef(se_lasso)
+```
+
+```{r}
+# Make predictions on the test data
+predictions <- min_lasso %>% predict(x_var) %>% as.vector()
+# Model performance metrics
+data.frame(
+  RMSE = RMSE(predictions, y_var),
+  Rsquare = R2(predictions, y_var)
+)
+```
+
+
 
 ## Salary Data
 ```{r}
