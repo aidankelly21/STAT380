@@ -427,29 +427,34 @@ bstats_salary <- bstats_salary %>%
   filter(salary > 500000)
 ```
 
+```{r}
+bstats_salary_21century <- bstats_salary %>%
+  filter(yearID >= 2002)
+```
+
 
 ```{r}
-lm_mod <- lm(salary ~ H, HR, data = bstats_salary)
+lm_mod <- lm(salary ~ H, HR, data = bstats_salary_21century)
 summary(lm_mod)
 ```
 
 ```{r}
-lm_mod_prd <- bstats_salary %>% add_predictions(lm_mod)
+lm_mod_prd <- bstats_salary_21century %>% add_predictions(lm_mod)
 lm_mod_prd
 ```
 
 ```{r}
-full_model <- lm(salary ~., data = bstats_sure)
+full_model <- lm(salary ~., data = bstats_salary_21century)
 summary(full_model)
 ```
 
 ```{r}
-full_model_pred <- bstats_sure %>% add_predictions(full_model)
+full_model_pred <- bstats_salary_21century %>% add_predictions(full_model)
 full_model_pred
 ```
 
 ```{r}
-adv_stat_mod <- lm(salary ~ OPS, data = bstats_salary)
+adv_stat_mod <- lm(salary ~ OPS, data = bstats_salary_21century)
 summary(adv_stat_mod)
 ```
 
@@ -792,6 +797,7 @@ ggplot(Salaries, aes(x = factor(yearID), y = salary/1e5)) +
    labs(x = "Year", y = "Salary (per $1,000,000)") +
    coord_flip()
 ```
+
 ```{r}
 avg_team_salaries1 <- Salaries %>%
     group_by(yearID, franchise, lgID) %>%
@@ -802,6 +808,7 @@ avg_team_salaries1 <- Salaries %>%
 avg_team_salaries1 %>%
   arrange(desc(salary))
 ```
+
 ```{r}
 ggplot(avg_team_salaries1, aes(x = franchise, y = salary)) +
   geom_bar(stat = "identity") +
