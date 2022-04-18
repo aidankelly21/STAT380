@@ -410,18 +410,22 @@ bstats_salary <- bstats_salary %>%
 lm_mod <- lm(salary ~ H, HR, data = bstats_salary)
 summary(lm_mod)
 ```
+
 ```{r}
 lm_mod_prd <- bstats_salary %>% add_predictions(lm_mod)
 lm_mod_prd
 ```
+
 ```{r}
 full_model <- lm(salary ~., data = bstats_sure)
 summary(full_model)
 ```
+
 ```{r}
 full_model_pred <- bstats_sure %>% add_predictions(full_model)
 full_model_pred
 ```
+
 ```{r}
 adv_stat_mod <- lm(salary ~ OPS, data = bstats_salary)
 summary(adv_stat_mod)
@@ -724,6 +728,7 @@ avg_team_salaries <- Salaries %>%
     summarise(salary = mean(salary)/1e6) %>%
     filter(!(franchise == "CLE" & lgID == "NL"))
 ```
+
 ```{r}
 ggplot(avg_team_salaries, 
        aes(x = yearID, y = salary, group = factor(franchise))) +
@@ -731,4 +736,32 @@ ggplot(avg_team_salaries,
        labs(x = "Year", y = "Average team salary (millions USD)")
 ```
 
+```{r}
+ggplot(Salaries, aes(x = factor(yearID), y = salary/1e5)) +
+   geom_boxplot(fill = "lightblue", outlier.size = 1) +
+   labs(x = "Year", y = "Salary (per $1,000,000)") +
+   coord_flip()
+```
+```{r}
+avg_team_salaries1 <- Salaries %>%
+    group_by(yearID, franchise, lgID) %>%
+    summarise(salary= mean(salary)/1e6) %>%
+    filter(!(franchise == "CLE" & lgID == "NL")) %>%
+    filter(yearID >= 2002)
+
+avg_team_salaries1 %>%
+  arrange(desc(salary))
+```
+```{r}
+ggplot(avg_team_salaries1, aes(x = franchise, y = salary)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Team", y = "Salary (per $100,000)")
+```
+
+```{r}
+ggplot(avg_team_salaries1, aes(x = franchise, y = salary, fill = franchise)) +
+   geom_boxplot(outlier.size = 1) +
+   labs(x = "Year", y = "Average Team Salary Since 2002 (per $10,000,000)") +
+   coord_flip()
+```
 
