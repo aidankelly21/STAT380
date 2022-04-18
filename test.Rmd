@@ -464,13 +464,14 @@ summary(adv_stat_mod)
 ```{r}
 #including 2002 and up because salary becomes higher
 bstats_salary_21century <- bstats_salary %>%
-  filter(yearID >= 2002)
+  filter(yearID >= 2002, PA >= 250)
 ```
 
 
 ```{r}
 bstats_salary_21century %>% head(10)
 ```
+
 
 ```{r}
 # Salary of hitters with best batting avg 
@@ -482,7 +483,7 @@ top_battingAVG <- bstats_salary_21century%>%
   ggplot(data = top_battingAVG, aes(x = BA, y= salary)) +
     geom_point()+
     geom_smooth(method = lm) +
-    labs(title="How Batting AVG affects Salary")
+    labs(title="How Batting AVG affects Salary NON-PITCHERS")
 ```
 
 
