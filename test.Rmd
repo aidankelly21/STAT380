@@ -79,6 +79,12 @@ str(bstats_salary)
 
 ```
 
+```{r}
+bstats_sure <- bstats_salary %>%
+  filter(PA > 150) %>%
+  select(OPS, BABIP, K_Percent, BB_Percent, salary)
+```
+
 ## Data Preparation (Lesson 1 & 2)
 
 ```{r}
@@ -391,7 +397,8 @@ Only five teams are in the top 25 of both payroll and win percentage in the 2010
 ## Multiple Linear Regression
 ```{r}
 bstats_salary <- bstats_salary %>%
-  filter(PA >= 100)
+  filter(PA >= 100) %>%
+  filter(salary > 500000)
 ```
 
 
@@ -403,6 +410,19 @@ summary(lm_mod)
 lm_mod_prd <- bstats_salary %>% add_predictions(lm_mod)
 lm_mod_prd
 ```
+```{r}
+full_model <- lm(salary ~., data = bstats_sure)
+summary(full_model)
+```
+```{r}
+full_model_pred <- bstats_sure %>% add_predictions(full_model)
+full_model_pred
+```
+```{r}
+adv_stat_mod <- lm(salary ~ OPS, data = bstats_salary)
+summary(adv_stat_mod)
+```
+
 
 ## Resampling Methods
 
