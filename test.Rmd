@@ -36,6 +36,27 @@ data("Pitching")
 ```
 
 ```{r}
+#Looking at vars in all data frames 
+names(People)
+```
+
+```{r}
+names(Batting)
+```
+
+```{r}
+names(Pitching)
+```
+
+
+```{r}
+#Looking at years 
+Pitching%>%
+ arrange(yearID) 
+```
+
+
+```{r}
 #Merges player name to Batting data. 
 bstats <- battingStats()
 	str(bstats)
@@ -446,6 +467,18 @@ bstats_salary_21century <- bstats_salary %>%
 bstats_salary_21century %>% head(10)
 ```
 
+```{r}
+# Salary of hitters with best batting avg 
+top_battingAVG <- bstats_salary_21century%>%
+  select(BA, salary) %>%
+  arrange(desc(BA))%>%
+  head(1500)
+
+  ggplot(data = top_battingAVG, aes(x = BA, y= salary)) +
+    geom_point()+
+    geom_smooth(method = lm) +
+    labs(title="How Batting AVG affects Salary")
+```
 
 
 ```{r}
