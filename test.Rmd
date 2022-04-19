@@ -319,6 +319,19 @@ res %>%
 
 ## Cluster Analysis (Lesson 5)
 ```{r}
+eu_career <- dist(careerBatting, method = "euclidean", upper = TRUE)
+eu_career <- get_dist(careerBatting, method = 'euclidean')
+```
+```{r}
+hc_sing <- hclust(eu_career, method = 'single')
+```
+
+```{r}
+plot(hc_sing)
+```
+
+
+```{r}
 #NOT COMPLETE!!!!! This was just a test, bstats is way too big.
 bstats_best <- bstats %>%
   filter(PA >= 600)
@@ -328,9 +341,12 @@ eu_dist <- get_dist(careerBatting_num1, method = 'euclidean')
 
 ```{r}
 hc_complete <- hclust(eu_dist, method = 'complete')
-
 plot(hc_complete)
 ```
+```{r}
+
+```
+
 
 #### Silhouette
 
