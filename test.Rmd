@@ -26,6 +26,7 @@ library(caret)
 library(ISLR2)
 library(ggcorrplot)
 library(glmnet)
+library(dendextend)
 ```
 
 ```{r}
@@ -318,6 +319,19 @@ res %>%
 
 
 ## Cluster Analysis (Lesson 5)
+```{r}
+careerBatting100 <- sample(careerBatting, 25, replace = FALSE)
+```
+
+```{r}
+dd <- dist(scale(careerBatting100), method = 'euclidean')
+dd <- get_dist(careerBatting100, method = "euclidean")
+hc_career <- hclust(dd, method = "single")
+```
+```{r}
+plot(dend, labels = career_hc$playerID)
+```
+
 ```{r}
 eu_career <- dist(careerBatting, method = "euclidean", upper = TRUE)
 eu_career <- get_dist(careerBatting, method = 'euclidean')
@@ -849,4 +863,5 @@ ggplot(avg_team_salaries1, aes(x = franchise, y = salary, fill = franchise)) +
    labs(x = "Year", y = "Average Team Salary Since 2002 (per $10,000,000)") +
    coord_flip()
 ```
+
 
