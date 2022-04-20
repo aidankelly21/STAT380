@@ -789,3 +789,48 @@ ggplot(avg_team_salaries1, aes(x = franchise, y = salary, fill = franchise)) +
    coord_flip()
 ```
 
+```{r}
+career_Babe <- bstats %>%
+  select(playerID, yearID, HR) %>%
+  filter(yearID > 1919 & yearID < 1935)
+
+#career_Babe %>%
+  #group_by(playerID) %>%
+ # transmute(Total = sum(HR)) %>%
+ # arrange(desc(Total))
+
+transform(career_Babe, Total= ave(HR, playerID, FUN=sum))[-2]
+```
+
+```{r}
+career_Babe <- career_Babe %>%
+  group_by(playerID) %>%
+  summarize(HR = sum(HR)) %>%
+  arrange(desc(HR)) %>%
+  head(10)
+
+```
+
+```{r}
+career_Babe$playerID[career_Babe$playerID == "ruthba01"] <- "Babe Ruth"
+career_Babe$playerID[career_Babe$playerID == "gehrilo01"] <- "Lou Gehrig"
+career_Babe$playerID[career_Babe$playerID == "hornsro01"] <- "Rogers Hornsby"
+career_Babe$playerID[career_Babe$playerID == "foxxji01"] <- "Jimmie Foxx"
+career_Babe$playerID[career_Babe$playerID == "wilsoha01"] <- "Hack Wilson"
+career_Babe$playerID[career_Babe$playerID == "simmoal01"] <- "Al Simmons"
+career_Babe$playerID[career_Babe$playerID == "kleinch01"] <- "Chuck Klein"
+career_Babe$playerID[career_Babe$playerID == "ottme01"] <- "Mel Ott"
+career_Babe$playerID[career_Babe$playerID == "gosligo01"] <- "Goose Goslin"
+career_Babe$playerID[career_Babe$playerID == "bottoji01"] <- "Jim Bottomley"
+```
+
+```{r}
+career_Babe
+```
+
+
+```{r}
+ggplot(data = career_Babe, aes(x = playerID, y = HR)) +
+  geom_bar(stat = "identity")
+```
+
