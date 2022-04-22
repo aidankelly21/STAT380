@@ -191,7 +191,7 @@ boxplot(hitters3,
 boxplot(hitters4, 
         main = "Slugging percentage from 1969 - present",
         ylab = "Slugging percentage",
-        col = "red",
+        col = "green",
         horizontal = TRUE)
 ```
 
@@ -834,7 +834,7 @@ ggplot(avg_team_salaries,
 ```
 
 ```{r}
-ggplot(Salaries, aes(x = factor(yearID), y = salary/1e5)) +
+ggplot(Salaries, aes(x = factor(yearID), y = salary/1e6)) +
    geom_boxplot(fill = "lightblue", outlier.size = 1) +
    labs(x = "Year", y = "Salary (per $1,000,000)") +
    coord_flip()
@@ -860,11 +860,10 @@ ggplot(avg_team_salaries1, aes(x = franchise, y = salary)) +
 ```{r}
 ggplot(avg_team_salaries1, aes(x = franchise, y = salary, fill = franchise)) +
    geom_boxplot(outlier.size = 1) +
-   labs(x = "Year", y = "Average Team Salary Since 2002 (per $10,000,000)") +
+   labs(x = "Year", y = "Average Player Salary per Team Since 2002 (per $1,000,000)") +
    coord_flip()
 ```
 
-<<<<<<< HEAD
 ```{r}
 career_Babe <- bstats %>%
   select(playerID, yearID, HR) %>%
@@ -906,7 +905,8 @@ career_Babe
 
 
 ```{r}
-ggplot(data = career_Babe, aes(x = playerID, y = HR)) +
-  geom_bar(stat = "identity")
+ggplot(data = career_Babe, aes(x = reorder(playerID, -HR), y = HR, fill = playerID)) +
+  geom_bar(stat = "identity") +
+  labs(x = "Top Ten Homerun Hitters from 1920-1934")
 ```
 
