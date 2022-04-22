@@ -909,6 +909,4 @@ career_Babe
 ggplot(data = career_Babe, aes(x = playerID, y = HR)) +
   geom_bar(stat = "identity")
 ```
-=======
->>>>>>> 16166b05fe9293ac70ba6235a6ab52c23e1a708e
 
