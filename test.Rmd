@@ -909,4 +909,42 @@ ggplot(data = career_Babe, aes(x = reorder(playerID, -HR), y = HR, fill = player
   geom_bar(stat = "identity") +
   labs(x = "Top Ten Homerun Hitters from 1920-1934")
 ```
+```{r}
+salary_batting <- bstats %>%
+              filter(yearID >= 1985) %>%
+              left_join(select(Salaries, playerID, yearID, teamID, salary), 
+                         by=c("playerID", "yearID", "teamID"))
+str(salary_batting)
+salary_batting[is.na(salary_batting)] <- 0
+```
+
+```{r}
+salary_batting_num <- salary_batting%>%
+  filter(PA >= 150) %>%
+  select(BABIP, OBP, SlugPct, SO, HR, salary)
+pairs(salary_batting_num)
+```
+
+```{r}
+res1 <- salary_batting_num %>% prcomp(scale = TRUE)
+res1
+```
+
+```{r}
+loadings1 <- res1$rotation
+loadings1
+```
+
+```{r}
+score_mat1 <- res1$x
+score_mat1
+```
+```{r}
+res1 %>%
+  fviz_pca_var(axes = c(1,2),
+               col.var = "contrib",
+               gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"),
+               repel = TRUE
+               )
+```
 
