@@ -320,29 +320,47 @@ res %>%
 
 ## Cluster Analysis (Lesson 5)
 ```{r}
-careerBatting100 <- sample(careerBatting, 25, replace = FALSE)
+careerBatting100 <- careerBatting %>%
+  filter(PA >= 100) 
 ```
 
 ```{r}
-dd <- dist(scale(careerBatting100), method = 'euclidean')
-dd <- get_dist(careerBatting100, method = "euclidean")
-hc_career <- hclust(dd, method = "single")
+careerBatting100sample <-
+  sample(careerBatting100,50)
+```
+
+
+```{r}
+careerdend <- dist(careerBatting100sample, method = "euclidean", upper = TRUE)
+careerdend <- get_dist(careerBatting100sample, method = "euclidean")
 ```
 ```{r}
-plot(dend, labels = career_hc$playerID)
+career_sing <- hclust(careerdend, method = "single")
+career_complete<- hclust(careerdend, method = 'complete')
+career_average <- hclust(careerdend, method = "average")
+career_centroid <- hclust(careerdend, method = "centroid")
 ```
 
 ```{r}
-eu_career <- dist(careerBatting, method = "euclidean", upper = TRUE)
-eu_career <- get_dist(careerBatting, method = 'euclidean')
-```
-```{r}
-hc_sing <- hclust(eu_career, method = 'single')
+plot(career_sing)
 ```
 
 ```{r}
-plot(hc_sing)
+plot(career_complete)
 ```
+
+```{r}
+plot(career_average)
+```
+
+```{r}
+plot(career_centroid)
+```
+
+```{r}
+fviz(career_centroid, k = 2, k_colors = "jco", as.ggplot = TRUE, show_labels = TRUE, main = "Euclidean-Centroid")
+```
+
 
 
 ```{r}
